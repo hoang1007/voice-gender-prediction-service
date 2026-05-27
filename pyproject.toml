@@ -1,0 +1,47 @@
+[project]
+name = "gender-prediction"
+version = "0.1.0"
+description = "Gender prediction service"
+readme = "README.md"
+authors = [
+    { name = "hoang1007", email = "hoangvuhuy1007@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "transformers>=4.40.0",
+    "optimum[onnxruntime-gpu]>=1.19.0",
+    "onnxruntime-gpu>=1.18.0",
+    "litserve>=0.2.0",
+    "soundfile>=0.12.0",
+    "soxr>=0.3.7",
+    "numpy>=1.26.0",
+    "pydantic-settings>=2.0.0",
+    "torch>=2.2.0",
+    "onnxconverter-common>=1.16.0",
+    "starlette>=1.1.0",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cuda" }
+
+[[tool.uv.index]]
+name = "pytorch-cuda"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[project.scripts]
+gender-prediction = "gender_prediction.api:main"
+gender-prediction-export = "gender_prediction.export:main"
+
+[build-system]
+requires = ["uv_build>=0.11.16,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.0",
+    "ruff>=0.15.14",
+]
+
+[tool.ruff.lint]
+select = ["F", "I"]
